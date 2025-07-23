@@ -9,7 +9,7 @@ let misionActiva = true;
 let recursos = {
   agua: Math.floor(Math.random() * 100) + 50,
   comida: Math.floor(Math.random() * 100) + 50,
-  energia: Math.floor(Math.random() * 100) + 50
+  energia: Math.floor(Math.random() * 100) + 50,
 };
 
 // Objeto principal de la nave
@@ -31,7 +31,7 @@ let nave = {
     console.log(`Agua: ${recursos.agua}`);
     console.log(`Comida: ${recursos.comida}`);
     console.log(`Energía: ${recursos.energia}`);
-  }
+  },
 };
 
 // === FASE 2: REGISTRO DE TRIPULANTES ===
@@ -42,7 +42,7 @@ function agregarTripulante(nombre, rol) {
   let nuevoTripulante = {
     nombre: nombre,
     rol: rol,
-    salud: 100
+    salud: 100,
   };
   tripulacion.push(nuevoTripulante);
   nave.tripulacion = tripulacion;
@@ -60,6 +60,11 @@ function mostrarTripulacion() {
   }
 }
 
+// --- AGREGAR TRIPULANTES INICIALES ---
+agregarTripulante("Rommy", "Comandante");
+agregarTripulante("Auren", "Ingeniero de Recursos");
+agregarTripulante("Aurelia", "Médica Estelar");
+
 // === FASE 3: SIMULACIÓN DE EVENTOS ===
 
 let dias = 5; // cantidad de turnos/días a simular
@@ -76,20 +81,20 @@ for (let dia = 1; dia <= dias; dia++) {
       recursos.energia -= 15;
       recursos.comida -= 10;
       recursos.agua -= 5;
-      tripulacion.forEach(t => t.salud -= 10);
+      tripulacion.forEach((t) => (t.salud -= 10));
       break;
 
     case 2: // Comer
       console.log("Actividad: Alimentación.");
       recursos.comida -= 20;
-      tripulacion.forEach(t => t.salud += 5);
+      tripulacion.forEach((t) => (t.salud += 5));
       break;
 
     case 3: // Descansar
       console.log("Actividad: Descanso.");
       recursos.agua -= 5;
       recursos.energia += 10;
-      tripulacion.forEach(t => t.salud += 10);
+      tripulacion.forEach((t) => (t.salud += 10));
       break;
 
     case 4: // Reportar
@@ -105,7 +110,7 @@ for (let dia = 1; dia <= dias; dia++) {
   recursos.comida = Math.max(recursos.comida, 0);
   recursos.energia = Math.max(recursos.energia, 0);
 
-  tripulacion.forEach(t => {
+  tripulacion.forEach((t) => {
     t.salud = Math.max(0, Math.min(100, t.salud));
   });
 }
@@ -114,18 +119,20 @@ for (let dia = 1; dia <= dias; dia++) {
 
 function promedioSalud() {
   let total = 0;
-  tripulacion.forEach(t => total += t.salud);
+  tripulacion.forEach((t) => (total += t.salud));
   return tripulacion.length ? (total / tripulacion.length).toFixed(2) : 0;
 }
 
 function tripulantesCriticos() {
-  return tripulacion.filter(t => t.salud < 50).length;
+  return tripulacion.filter((t) => t.salud < 50).length;
 }
 
 function estadoRecursos() {
   console.log(`\n--- REPORTE FINAL DE RECURSOS ---`);
   for (let tipo in recursos) {
-    console.log(`${tipo.charAt(0).toUpperCase() + tipo.slice(1)}: ${recursos[tipo]}`);
+    console.log(
+      `${tipo.charAt(0).toUpperCase() + tipo.slice(1)}: ${recursos[tipo]}`
+    );
   }
 }
 
